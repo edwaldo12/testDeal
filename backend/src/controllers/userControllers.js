@@ -2,7 +2,6 @@ import UserModel from "../models/model.js";
 import bcrypt from "bcrypt";
 
 export const addUser = async (req, res) => {
-  console.log(req.body);
   try {
     const { nama, role, username, password, tanggal_lahir, email } = req.body;
     if (!nama || !role || !username || !password || !tanggal_lahir || !email) {

@@ -1,10 +1,8 @@
 import jwt from "jsonwebtoken";
-import { keyJWT, keyRefresh } from "../config/auth.js";
+import { keyJWT } from "../config/auth.js";
 
 export default async function verifyToken(req, res, next) {
   let tokenUser = req.headers["x-access-token"];
-  // let cookieUser = req.headers["set-cookie"];
-  // let getRefreshToken = cookieUser[0].split(";")[0].split("=")[1];
 
   if (!tokenUser) {
     return res.status(403).json({
@@ -20,8 +18,7 @@ export default async function verifyToken(req, res, next) {
     }
     return decoded;
   });
-
-  let role = decoded.userLogin.role;
+  let role = decoded.role;
 
   if (role != "Admin") {
     return res.status(403).json({

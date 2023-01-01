@@ -55,15 +55,30 @@ export const refreshedToken = async (req, res) => {
     });
 
     const newToken = await newRefreshToken.save();
-    console.log(newToken.token);
     return res.status(200).json({
       status: "Success",
       data: {
         token: newToken.token,
-        user: newToken.user
+        user: newToken.user,
       },
     });
   } catch (error) {
     return res.status(400).json({ errormsg: error });
   }
+};
+
+export const getToken = async (req, res) => {
+  const refresh_token = req.body.refresh_token;
+  const token = await refreshToken.findOne({ token: refresh_token });
+
+  if (!token) {
+    return res.status(400).json({
+      status: "error",
+      message: "invalid token",
+    });
+  }
+  return res.json({
+    status: "success",
+    token,
+  });
 };
